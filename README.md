@@ -1,7 +1,7 @@
 # Semantic-SAM: Segment and Recognize Anything at Any Granularity
 
-# Introduction
+## Introduction
 
-# Interactive Multi-Granulairy Segmentation
+## Interactive Multi-Granulairy Segmentation
 
-# Multi-Granularity Image Editing
+## Multi-Granularity Image Editing
