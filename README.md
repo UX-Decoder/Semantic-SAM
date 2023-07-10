@@ -6,15 +6,28 @@
 ## Introduction
 In this work, we introduce Semantic-SAM, a universal image segmentation model to enable segment and recognize anything at any desired granularity. 
 Our model offers the following attributes from instance to part level:
-* Semantic Awareness
-* Granularity Abundance
+* **Granularity Abundance**. Our model can produce all possible segmentation granularities for a user click with high quality, which enables more **controllable** and **user-friendly** interactive segmentation.
+* **Semantic Awareness**. We jointly train SA-1B with semantically labeled datasets to learn the semantics of both instance and part.
+
 
   
 ![teaser_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/b7ebbef7-fc34-4768-9082-cc110951d403)
 
-## Interactive Multi-Granularity Segmentation
+Our model supports a wide range of segmentation tasks and their related applications, including:
+* Generic Segmentation
 
-## Multi-Granularity Image Editing
+* Part Segmentation
+
+* Interactive Multi-Granularity Segmentation with Semantics
+
+* Multi-Granularity Image Editing
+
+:fire: **Related projects:**
+
+* [Mask DINO](https://github.com/IDEA-Research/MaskDINO): We build upon Mask DINO which is a unified detection and segmentation model to implement our model.
+* [OpenSeed](https://github.com/IDEA-Research/OpenSeeD) : Strong open-set segmentation methods based on Mask DINO. We base on it to implement our open-vocabulary segmentation.
+* [SEEM](https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once) : Segment using a wide range of user prompts.
+
 
 ## Method
 ![method_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/e392d5a8-2f65-45a6-b786-3b09af15cd33)
