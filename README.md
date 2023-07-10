@@ -27,6 +27,7 @@ Our model supports a wide range of segmentation tasks and their related applicat
 * [Mask DINO](https://github.com/IDEA-Research/MaskDINO): We build upon Mask DINO which is a unified detection and segmentation model to implement our model.
 * [OpenSeed](https://github.com/IDEA-Research/OpenSeeD) : Strong open-set segmentation methods based on Mask DINO. We base on it to implement our open-vocabulary segmentation.
 * [SEEM](https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once) : Segment using a wide range of user prompts.
+* [VLPart](https://github.com/facebookresearch/VLPart) : Going denser with open-vocabulary part segmentation.
 
 
 ## Method
