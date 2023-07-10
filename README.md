@@ -7,6 +7,6 @@ Our model offers the following atributes from instance to part level:
 * Semantic Awareness
 * Granularity Abundance
 
-## Interactive Multi-Granulairy Segmentation
+## Interactive Multi-Granularity Segmentation
 
 ## Multi-Granularity Image Editing
