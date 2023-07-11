@@ -14,12 +14,10 @@ Our model offers the following attributes from instance to part level:
 ![teaser_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/b7ebbef7-fc34-4768-9082-cc110951d403)
 
 Our model supports a wide range of segmentation tasks and their related applications, including:
+
 * Generic Segmentation
-
 * Part Segmentation
-
 * Interactive Multi-Granularity Segmentation with Semantics
-
 * Multi-Granularity Image Editing
 
 :fire: **Related projects:**
