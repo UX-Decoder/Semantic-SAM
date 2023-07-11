@@ -9,6 +9,9 @@ Our model offers the following attributes from instance to part level:
 * **High Quality**. We base on the DETR-based model to implement both generic and interactive segmentation, and validate that SA-1B helps generic and part segmentation. The mask quality of multi-granularity is high.
 
 ![teaser_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/769a0c28-bcdf-42ac-b418-17961c1f2430)
+One-click to output up to 6 granularity masks. Try it in our demo!
+![character](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/10554e8c-e7cf-463b-875e-0792e629315e)
+
 
 Our model supports a wide range of segmentation tasks and their related applications, including:
 
@@ -17,7 +20,7 @@ Our model supports a wide range of segmentation tasks and their related applicat
 * Interactive Multi-Granularity Segmentation with Semantics
 * Multi-Granularity Image Editing
 
-![character](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/1708345c-1539-4d95-8c38-b3546975ed6d)
+**Code will be available soon!**
 
 :fire: **Related projects:**
 
