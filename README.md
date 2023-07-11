@@ -1,6 +1,7 @@
 # Semantic-SAM: Segment and Recognize Anything at Any Granularity
 
-:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo]()\] 
+:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo1](http://exp.xyzou.net:7860/)\]  &nbsp; 🍐: \[[Try Gradio Demo2](http://exp.xyzou.net:7861/)\] 
+
 
 
 ## Introduction
