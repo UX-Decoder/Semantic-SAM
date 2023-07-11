@@ -25,10 +25,6 @@ Our model supports a wide range of segmentation tasks and their related applicat
 * [SEEM](https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once) : Segment using a wide range of user prompts.
 * [VLPart](https://github.com/facebookresearch/VLPart) : Going denser with open-vocabulary part segmentation.
 
-
-## Method
-![method_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/8e8150a4-a1de-49a6-a817-3c43cf55871b)
-
 ## Comparison with SAM and SA-1B Ground-truth
 ![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6c7b50eb-6fe4-4a4f-b3cb-71920e30193e)
 
@@ -39,6 +35,10 @@ Our model supports a wide range of segmentation tasks and their related applicat
 We visualize the prediction of each content prompt embedding of points with a fixed order
 for our model. We find all the output masks are from small to large. This indicates each prompt
 embedding represents a semantic level. The red point in the first column is the click.
+
+## Method
+![method_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/8e8150a4-a1de-49a6-a817-3c43cf55871b)
+
 ## Experiments
 We also show that jointly training SA-1B interactive segmentation and generic segmentation can improve the generic segmentation performance.
 ![coco](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/b4963761-ef36-47bb-b960-9884b86dce5b)
