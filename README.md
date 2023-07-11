@@ -9,9 +9,7 @@ Our model offers the following attributes from instance to part level:
 * **Granularity Abundance**. Our model can produce all possible segmentation granularities for a user click with high quality, which enables more **controllable** and **user-friendly** interactive segmentation.
 * **Semantic Awareness**. We jointly train SA-1B with semantically labeled datasets to learn the semantics of both instance and part.
 
-
-  
-![teaser_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/b7ebbef7-fc34-4768-9082-cc110951d403)
+![teaser_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/769a0c28-bcdf-42ac-b418-17961c1f2430)
 
 Our model supports a wide range of segmentation tasks and their related applications, including:
 
@@ -29,7 +27,8 @@ Our model supports a wide range of segmentation tasks and their related applicat
 
 
 ## Method
-![method_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/e392d5a8-2f65-45a6-b786-3b09af15cd33)
+![method_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/8e8150a4-a1de-49a6-a817-3c43cf55871b)
+
 ## Comparison with SAM and SA-1B Ground-truth
 ![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6c7b50eb-6fe4-4a4f-b3cb-71920e30193e)
 
