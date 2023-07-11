@@ -1,5 +1,5 @@
 # Semantic-SAM: Segment and Recognize Anything at Any Granularity
-:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo1](http://semantic-sam.xyzou.net:6080/)\]  &nbsp; 🍐: \[[Try Gradio Demo2](http://semantic-sam.xyzou.net:6081/)\] &nbsp; 🍌: \[[Try Gradio Demo2](http://semantic-sam.xyzou.net:6082/)\] &nbsp; 🥑: \[[Try Gradio Demo2](http://semantic-sam.xyzou.net:6083/)\] 
+:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo1](http://semantic-sam.xyzou.net:6080/)\]  &nbsp; 🍐: \[[Try Gradio Demo2](http://semantic-sam.xyzou.net:6081/)\] &nbsp; 🍌: \[[Try Gradio Demo3](http://semantic-sam.xyzou.net:6082/)\] &nbsp; 🥑: \[[Try Gradio Demo4](http://semantic-sam.xyzou.net:6083/)\] 
 
 ## Introduction
 In this work, we introduce Semantic-SAM, a universal image segmentation model to enable segment and recognize anything at any desired granularity. 
