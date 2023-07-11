@@ -35,11 +35,13 @@ Our model supports a wide range of segmentation tasks and their related applicat
 
 (a)(b) are the output masks of our model and SAM, respectively. The red points on the left-most image of each row are the user clicks. (c) shows the GT masks that contain the user clicks. The outputs of our model have been processed to remove duplicates.
 ## Learned prompt semantics
-![levels](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/965784dc-fa70-46fd-89d2-0722325f4f69)
+![levels](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/d4c3df78-ba07-4f09-9d4f-e5d4f2fc7f45)
+
 We visualize the prediction of each content prompt embedding of points with a fixed order
 for our model. We find all the output masks are from small to large. This indicates each prompt
 embedding represents a semantic level. The red point in the first column is the click.
 ## Experiments
 We also show that jointly training SA-1B interactive segmentation and generic segmentation can improve the generic segmentation performance.
-![coco](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6f633fa3-7cb3-4ead-a10b-41a3bea3675a)
+![coco](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/b4963761-ef36-47bb-b960-9884b86dce5b)
+
 We also outperform SAM on both mask quality and granularity completeness, please refer to our paper for more experimental details.
