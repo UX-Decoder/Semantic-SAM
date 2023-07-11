@@ -31,7 +31,8 @@ Our model supports a wide range of segmentation tasks and their related applicat
 ## Method
 ![method_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/e392d5a8-2f65-45a6-b786-3b09af15cd33)
 ## Comparison with SAM and SA-1B Ground-truth
-![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/c137ce09-e1f5-4584-8e47-21887ab20ad1)
+![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6c7b50eb-6fe4-4a4f-b3cb-71920e30193e)
+
 (a)(b) are the output masks of our model and SAM, respectively. The red points on the left-most image of each row are the user clicks. (c) shows the GT masks that contain the user clicks. The outputs of our model have been processed to remove duplicates.
 ## Learned prompt semantics
 ![levels](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/965784dc-fa70-46fd-89d2-0722325f4f69)
