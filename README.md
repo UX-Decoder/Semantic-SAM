@@ -17,6 +17,8 @@ Our model supports a wide range of segmentation tasks and their related applicat
 * Interactive Multi-Granularity Segmentation with Semantics
 * Multi-Granularity Image Editing
 
+![character](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/1708345c-1539-4d95-8c38-b3546975ed6d)
+
 :fire: **Related projects:**
 
 * [Mask DINO](https://github.com/IDEA-Research/MaskDINO): We build upon Mask DINO which is a unified detection and segmentation model to implement our model.
