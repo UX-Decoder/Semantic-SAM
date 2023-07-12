@@ -38,30 +38,20 @@ cur_model = 'None'
 '''
 build model
 '''
-root="/home/t-zhangha/azure_data/output/"
-# root="/mnt/output/"
-# model = BaseModel(opt, build_model(opt)).from_pretrained(pretrained_pth).eval().cuda()
+
 model=None
 model_size=None
 ckpt=None
 cfgs={'T':"configs/semantic_sam_only_sa-1b_swinT.yaml",
       'L':"configs/semantic_sam_only_sa-1b_swinL.yaml"}
-'''
-audio
-'''
+
 # audio = whisper.load_model("base")
-sam_ckpt=root+"fengli/joint_part_idino/train_interactive_all_m2m_swinL_bs16_0.1part9_nohash_bs1_resume_all_local_0.15_onlysa_swinL_4node_mnode/model_0099999.pth"
 sam_cfg=cfgs['L']
-# semantic_ckpt=root+"fengli/joint_part_idino/train_interactive_all_m2m_swint_bs16_pas_coco_0.1part9_nohash_bs1_resume_all_local_0.1_hcb/model_0229999.pth"
-# semantic_cfg=cfgs['T']
+
 opt = load_opt_from_config_file(sam_cfg)
-# opt = init_distributed_mode(opt)
-# model_sam = BaseModel(opt, build_model(opt)).eval().cuda()
-model_sam = BaseModel(opt, build_model(opt)).from_pretrained(sam_ckpt).eval().cuda()
-# opt = load_opt_from_config_files(semantic_cfg)
-# opt = init_distributed(opt)
-# model_semantic = BaseModel(opt, build_model(opt)).eval().cuda()
-# model_semantic = BaseModel(opt, build_model(opt)).from_pretrained(semantic_ckpt).eval().cuda()
+
+model_sam = BaseModel(opt, build_model(opt)).from_pretrained(args.ckpt).eval().cuda()
+
 @torch.no_grad()
 def inference(image,text,text_part,text_thresh,*args, **kwargs):
     text_size, hole_scale, island_scale=640,100,100
@@ -168,8 +158,7 @@ with demo:
                 text.render()
             with gr.Row(scale=1.0):
                 text_part.render()
-            # with gr.Row(scale=1.0):
-            #     sort_method.render()
+
             gallery_tittle = gr.Markdown("# The masks sorted by IoU scores (masks with low score may have low quality).")
             with gr.Row(scale=9.0):
                 gallery_output.render()
