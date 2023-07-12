@@ -13,6 +13,7 @@ We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM
 * **High Quality**. We base on the DETR-based model to implement both generic and interactive segmentation, and validate that SA-1B helps generic and part segmentation. The mask quality of multi-granularity is high.
 
 ### :rocket: **News** 
+* We release the **demo code!**
 * We release the **training and inference code and checkpoints (SwinT, SwinL) trained on SA-1B!**
 * We release the **training code to reproduce SAM!**
 
@@ -117,7 +118,10 @@ python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_o
 python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_reproduce_sam_swinL.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n MODEL.WEIGHTS=/path/to/weights
 ```
 This is a swinL backbone. The only difference of this script is to use many-to-one matching and 3 prompts as in SAM.
-
+### Demo
+```shell
+python demo.py
+```
 ## Comparison with SAM and SA-1B Ground-truth
 ![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6c7b50eb-6fe4-4a4f-b3cb-71920e30193e)
 
