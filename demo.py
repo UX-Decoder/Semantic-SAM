@@ -1,15 +1,10 @@
 # --------------------------------------------------------
-# SEEM -- Segment Everything Everywhere All At Once
-# Copyright (c) 2022 Microsoft
+# Semantic-SAM: Segment and Recognize Anything at Any Granularity
+# Copyright (c) 2023 Microsoft
 # Licensed under The MIT License [see LICENSE for details]
-# Written by Xueyan Zou (xueyan@cs.wisc.edu), Jianwei Yang (jianwyan@microsoft.com)
+# Written by Hao Zhang (hzhangcx@connect.ust.hk)
 # --------------------------------------------------------
 
-# import os
-# import warnings
-# import PIL
-# from PIL import Image
-# from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple
 
 import gradio as gr
 import torch
@@ -38,18 +33,7 @@ build args
 args = parse_option()
 
 
-# META DATA
 cur_model = 'None'
-# if 'focalt' in args.conf_files:
-#     pretrained_pth = os.path.join("seem_focalt_v2.pt")
-#     if not os.path.exists(pretrained_pth):
-#         os.system("wget {}".format("https://huggingface.co/xdecoder/SEEM/resolve/main/seem_focalt_v2.pt"))
-#     cur_model = 'Focal-T'
-# elif 'focal' in args.conf_files:
-#     pretrained_pth = os.path.join("seem_focall_v1.pt")
-#     if not os.path.exists(pretrained_pth):
-#         os.system("wget {}".format("https://huggingface.co/xdecoder/SEEM/resolve/main/seem_focall_v1.pt"))
-#     cur_model = 'Focal-L'
 
 '''
 build model
@@ -80,32 +64,11 @@ model_sam = BaseModel(opt, build_model(opt)).from_pretrained(sam_ckpt).eval().cu
 # model_semantic = BaseModel(opt, build_model(opt)).from_pretrained(semantic_ckpt).eval().cuda()
 @torch.no_grad()
 def inference(image,text,text_part,text_thresh,*args, **kwargs):
-    # global model_size
-    # global ckpt
-    # global model
-    # global cfgs
-    # global root
-    # changed=False
-    # # import pdb;pdb.set_trace()
-    # if text_model_size != model_size or ckpt !=text_ckpt:
-    #     model_size=text_model_size
-    #     ckpt=text_ckpt
-    #     opt = load_opt_from_config_files(cfgs[model_size])
-    #     opt = init_distributed(opt)
-    #     model = BaseModel(opt, build_model(opt)).from_pretrained(root+ckpt).eval().cuda()
-    #     changed=True
-        # with torch.no_grad():
-        #     model.model.sem_seg_head.predictor.lang_encoder.get_text_embeddings(COCO_PANOPTIC_CLASSES + ["background"],
-        #                                                                         is_eval=True)
     text_size, hole_scale, island_scale=640,100,100
     with torch.autocast(device_type='cuda', dtype=torch.float16):
-        # if semantic:
-        #     model=model_semantic
-        # else:
         semantic=False
         model=model_sam
         a,b= interactive_infer_image_idino_m2m(model, image,text,text_part,text_thresh,text_size,hole_scale,island_scale,semantic, *args, **kwargs)
-        # prefix="changed to:" if changed else "unchanged:"
         return a,b
 
 
@@ -130,19 +93,6 @@ class ImageMask(gr.components.Image):
 launch app
 '''
 title = "SEMANTIC-SAM: SEGMENT AND RECOGNIZE ANYTHING AT ANY GRANULARITY"
-description = """
-<div style="text-align: center; font-weight: bold;">
-    <span style="font-size: 18px" id="paper-info">
-        [<a href="https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once" target="_blank">GitHub</a>]
-        [<a href="https://arxiv.org/pdf/2304.06718.pdf" target="_blank">arXiv</a>]
-    </span>
-</div>
-<div style="text-align: left; font-weight: bold;">
-    <br>
-    &#x1F32A Note: The current model is run on <span style="color:blue;">SEMANTIC-SAM {}</span>, for <span style="color:blue;">best performance</span> refer to <a href="https://huggingface.co/spaces/xdecoder/SEEM" target="_blank"><span style="color:red;">our demo</span></a>.
-    </p>
-</div>
-""".format(cur_model)
 
 article = "The Demo is Run on SEMANTIC SAM."
 
@@ -168,13 +118,6 @@ text_model_size=gr.components.Textbox(label="model size (L or T)",value="L",visi
 text_ckpt=gr.components.Textbox(label="ckpt path (relative to /mnt/output/)",value="fengli/joint_part_idino/train_interactive_all_m2m_swinL_bs16_0.1part9_nohash_bs1_resume_all_local_0.15_onlysa_swinL_4node_mnode/model_0099999.pth",visible=True)
 text_ckpt_now=gr.components.Textbox(label="current ckpt path (relative to /mnt/output/)",value="",visible=True)
 semantic=gr.Checkbox(label="Semantics", info="Do you use semantic? (The semantic model in the demo is trained on SA-1B, COCO and PASCAL Part.)")
-# sort_method=gr.Radio(["IoU score", "Area"], label="Sort by", info="")
-# def edit():
-#     text.update(visible=True)
-#     text_part.update(visible=True)
-#     text.render()
-#     text_part.render()
-# checkbox=gr.inputs.CheckboxGroup(choices=["Stroke"], type="value", label="Interative Mode")
 
 title='''
 # Semantic-SAM: Segment and Recognize Anything at Any Granularity
@@ -208,30 +151,15 @@ with demo:
                     ["examples/minecraft2.png"],
                     ["examples/ref_cat.jpeg"],
                     ["examples/img.png"],
-                    # ["examples/truck.jpg"],
-                    # ["examples/placeholder.png", ["Stroke"]],
+
                 ],
                 inputs=image,
-                # outputs=gr.Gallery(label="Image Gallery.", min_width=1536).style(grid=6),
 
                 cache_examples=False,
             )
             with gr.Row(scale=1.0):
-                # semantic.render()
                 with gr.Column():
                     text_thresh.render()
-                # with gr.Column(scale=1.0):
-                #     text_size.render()
-                # with gr.Column(scale=1.0):
-                #     text_model_size.render()
-                # with gr.Column(scale=1.0):
-                #     hole_scale.render()
-                # with gr.Column(scale=1.0):
-                #     island_scale.render()
-                # with gr.Column(scale=10.0):
-                #     text_ckpt.render()
-                # with gr.Column(scale=10.0):
-                #     text_ckpt_now.render()
             with gr.Row(scale=2.0):
                 clearBtn = gr.ClearButton(
                     components=[image])
@@ -248,20 +176,14 @@ with demo:
             gallery_tittle1 = gr.Markdown("# The masks sorted by mask areas.")
             with gr.Row(scale=9.0):
                 gallery_output2.render()
-            # with gr.Row(scale=1.0):
-            #     text_res.render()
 
     title = title,
-    description = description,
     article = article,
     allow_flagging = 'never',
 
     runBtn.click(inference, inputs=[image, text, text_part,text_thresh],
               outputs = [gallery_output,gallery_output2])
-    # semantic.change(fn=change_vocab, inputs=semantic, outputs=text_part)
-    # semantic.change(fn=change_vocab, inputs=semantic, outputs=text)
-    # semantic.change(fn=change_vocab, inputs=semantic, outputs=text_res)
-    # vocabBtn.click(edit)
+
 
 
 demo.queue().launch(share=True,server_port=6081)
