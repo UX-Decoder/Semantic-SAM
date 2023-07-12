@@ -509,7 +509,7 @@ class Visualizer:
             except AttributeError:
                 mask_color = None
 
-            text = self.metadata.stuff_classes[category_idx]
+            text = self.metadata.stuff_classes[category_idx].replace('-other','').replace('-merged','')
             self.draw_binary_mask(
                 mask,
                 color=mask_color,
@@ -530,8 +530,9 @@ class Visualizer:
             scores = [x["score"] for x in sinfo]
         except KeyError:
             scores = None
+        class_names = [name.replace('-other','').replace('-merged','') for name in self.metadata.thing_classes]
         labels = _create_text_labels(
-            category_ids, scores, self.metadata.thing_classes, [x.get("iscrowd", 0) for x in sinfo]
+            category_ids, scores, class_names, [x.get("iscrowd", 0) for x in sinfo]
         )
 
         try:
@@ -1262,6 +1263,8 @@ class Visualizer:
                 # median is more stable than centroid
                 # center = centroids[largest_component_id]
                 center = np.median((cc_labels == cid).nonzero(), axis=1)[::-1]
+                bottom=np.max((cc_labels == cid).nonzero(), axis=1)[::-1]
+                center[1]=bottom[1]+2
                 self.draw_text(text, center, color=color)
 
     def _convert_keypoints(self, keypoints):

@@ -1,0 +1,1 @@
+from .interactive_idino_m2m import interactive_infer_image as interactive_infer_image_idino_m2m
