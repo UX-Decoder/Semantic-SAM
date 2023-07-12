@@ -21,7 +21,6 @@ from .utils import MLP, gen_encoder_output_proposals, inverse_sigmoid
 from ...utils import box_ops
 from ...utils import configurable
 
-
 class IMaskDINODecoder(nn.Module):
     @configurable
     def __init__(
@@ -416,10 +415,55 @@ class IMaskDINODecoder(nn.Module):
             'scalar': scalar,
         }
 
-        # 100*batch*256
-        if not input_query_bbox is None:
-            input_query_label = input_query_label
-            input_query_bbox = input_query_bbox
+
+        return input_query_label,input_query_bbox,attn_mask,mask_dict
+
+    def prepare_for_dn_mo_infer(self, targets, tgt, refpoint_emb, batch_size):
+
+        known = [(torch.ones_like(t['points'])).cuda() for t in targets]
+        known_num = [k.sum() for k in known]
+
+        assert max(known_num)>0
+
+        pb_labels = torch.stack([t['pb'] for t in targets])
+        # FIXME this is for future content-based interaction; pool content features as label embedding
+        labels = torch.zeros_like(pb_labels).long()
+        boxes = torch.stack([t['points'] for t in targets])
+
+
+        known_labels = labels
+        known_pb_labels = pb_labels
+
+        known_bboxs = boxes
+        known_labels_expaned = known_labels.clone()
+        known_pb_labels_expaned = known_pb_labels.clone()
+        known_bbox_expand = known_bboxs.clone()
+
+        m = known_labels_expaned.long().to('cuda')
+        m_pb = known_pb_labels_expaned.long().to('cuda')
+        input_label_embed = self.label_enc(m)+self.pb_embedding(m_pb)
+        input_bbox_embed = inverse_sigmoid(known_bbox_expand)
+
+        input_label_embed = input_label_embed.repeat_interleave(self.num_all_tokens,1) + self.mask_tokens.weight.unsqueeze(0).repeat(input_label_embed.shape[0], input_label_embed.shape[1], 1)
+        input_bbox_embed = input_bbox_embed.repeat_interleave(self.num_all_tokens,1)
+
+
+        scalar = int(input_label_embed.shape[1]/self.num_all_tokens)
+
+        pad_size = input_label_embed.shape[1]
+
+        if input_label_embed.shape[1]>0:
+            input_query_label = input_label_embed
+            input_query_bbox = input_bbox_embed
+
+        attn_mask = None
+        mask_dict = {
+            'known_lbs_bboxes': (known_labels, known_bboxs),
+            # 'know_idx': know_idx,
+            'pad_size': pad_size,
+            'scalar': scalar,
+        }
+
 
         return input_query_label,input_query_bbox,attn_mask,mask_dict
 
@@ -457,11 +501,10 @@ class IMaskDINODecoder(nn.Module):
         """
         task: seg/det TODO add sam
         """
-        task = 'sam'
         prediction_switch = extra
         self.prediction_switch = prediction_switch
         assert len(x) == self.num_feature_levels
-        do_seg = (task != 'det')   # if task is det, not do segmentation training (for O365)
+        do_seg = True  # if task is det, not do segmentation training (for O365)
         size_list = []
         # disable mask, it does not affect performance
         enable_mask = 0
@@ -496,8 +539,12 @@ class IMaskDINODecoder(nn.Module):
         mask_dict = None
         if self.dn != "no":
             assert targets is not None
-            input_query_label, input_query_bbox, tgt_mask, mask_dict = \
-                self.prepare_for_dn_mo(targets, None, None, x[0].shape[0])
+            if task=='demo':
+                input_query_label, input_query_bbox, tgt_mask, mask_dict = \
+                    self.prepare_for_dn_mo_infer(targets, None, None, x[0].shape[0])
+            else:
+                input_query_label, input_query_bbox, tgt_mask, mask_dict = \
+                    self.prepare_for_dn_mo(targets, None, None, x[0].shape[0])
             tgt=input_query_label
             refpoint_embed=input_query_bbox
             if tgt is None:
