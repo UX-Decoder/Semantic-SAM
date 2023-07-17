@@ -317,7 +317,7 @@ class SamAutomaticMaskGenerator:
 
         # Filter by predicted IoU
         # if self.pred_iou_thresh > 0.0:
-        keep_mask = data["iou_preds"] > 0.5#self.pred_iou_thresh
+        keep_mask = data["iou_preds"] > self.pred_iou_thresh
         data.filter(keep_mask)
 
         # Calculate stability score
@@ -325,7 +325,7 @@ class SamAutomaticMaskGenerator:
             data["masks"], 0.0, self.stability_score_offset
         )
         # if self.stability_score_thresh > 0.0:
-        keep_mask = data["stability_score"] >= 0.9#self.stability_score_thresh
+        keep_mask = data["stability_score"] >= self.stability_score_thresh
         data.filter(keep_mask)
 
         # Threshold masks and calculate boxes

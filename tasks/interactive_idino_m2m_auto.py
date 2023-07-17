@@ -27,16 +27,25 @@ def interactive_infer_image(model, image,all_classes,all_parts, thresh,text_size
     image_ori = np.asarray(image_ori)
     images = torch.from_numpy(image_ori.copy()).permute(2,0,1).cuda()
 
-    mask_generator = SamAutomaticMaskGenerator(model)
+    mask_generator = SamAutomaticMaskGenerator(model,points_per_side=32,
+            pred_iou_thresh=0.86,
+            stability_score_thresh=0.92,
+            min_mask_region_area=100
+        )
+
     outputs = mask_generator.generate(images)
 
-    plt.figure(figsize=(10, 10))
+    fig=plt.figure(figsize=(10, 10))
     plt.imshow(image_ori)
     show_anns(outputs)
-    img_buf = io.BytesIO()
-    plt.savefig(img_buf, format='png',bbox_inches='tight')
-    im = Image.open(img_buf)
-
+    # import pdb;pdb.set_trace()
+    # img_buf = io.BytesIO()
+    # with open('/tmp/gradio/img_buf.png')
+    # plt.savefig('/tmp/gradio/img_buf.png', format='png',bbox_inches='tight')
+    # im = Image.open('/tmp/gradio/img_buf.png')
+    fig.canvas.draw()
+    im=Image.frombytes('RGB',
+                        fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
     return im
 
 
