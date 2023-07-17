@@ -13,7 +13,8 @@ We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM
 * **High Quality**. We base on the DETR-based model to implement both generic and interactive segmentation, and validate that SA-1B helps generic and part segmentation. The mask quality of multi-granularity is high.
 
 ### :rocket: **News** 
-* We release the **demo code!**
+* We release the **demo code for mask auto generation!**
+* We release the **demo code for interactive segmentation!**
 * We release the **training and inference code and checkpoints (SwinT, SwinL) trained on SA-1B!**
 * We release the **training code to reproduce SAM!**
 
