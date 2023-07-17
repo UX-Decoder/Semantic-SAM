@@ -2,18 +2,18 @@
 In this work, we introduce **Semantic-SAM**, a universal image segmentation model to enable segment and recognize anything at any desired granularity.
 We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM and beyond it**.
 
-:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo1](http://semantic-sam.xyzou.net:6081/)\]  &nbsp; :apple: \[[Try Auto Generation Demo](https://e39b5df85bef7a7f80.gradio.live)\]
+:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo](http://semantic-sam.xyzou.net:6081/)\]  &nbsp; :apple: \[[Try Auto Generation Demo](https://e39b5df85bef7a7f80.gradio.live)\]
 
 ### :rocket: Features
-:fire: **Reproduce SAM**. SAM training is a sub-task of ours. We have released training code to reproduce SAM training.
+:fire: **Reproduce SAM**. SAM training is a sub-task of ours. We have released the training code to reproduce SAM training.
   
 :fire: **Beyond SAM**. Our newly proposed model offers the following attributes from instance to part level:
 * **Granularity Abundance**. Our model can produce all possible segmentation granularities for a user click with high quality, which enables more **controllable** and **user-friendly** interactive segmentation.
-* **Semantic Awareness**. We jointly train SA-1B with semantically labeled datasets to learn the semantics in both object-level and part-level.
+* **Semantic Awareness**. We jointly train SA-1B with semantically labeled datasets to learn the semantics at both object-level and part-level.
 * **High Quality**. We base on the DETR-based model to implement both generic and interactive segmentation, and validate that SA-1B helps generic and part segmentation. The mask quality of multi-granularity is high.
 
 ### :rocket: **News** 
-* We release the **demo code for mask auto generation!**
+* We release the **demo code for mask auto-generation!**
 * We release the **demo code for interactive segmentation!**
 * We release the **training and inference code and checkpoints (SwinT, SwinL) trained on SA-1B!**
 * We release the **training code to reproduce SAM!**
@@ -35,9 +35,9 @@ Our model supports a wide range of segmentation tasks and their related applicat
 :fire: **Related projects:**
 
 * [Mask DINO](https://github.com/IDEA-Research/MaskDINO): We build upon Mask DINO which is a unified detection and segmentation model to implement our model.
-* [OpenSeed](https://github.com/IDEA-Research/OpenSeeD) : Strong open-set segmentation methods based on Mask DINO. We base on it to implement our open-vocabulary segmentation.
-* [SEEM](https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once) : Segment using a wide range of user prompts.
-* [VLPart](https://github.com/facebookresearch/VLPart) : Going denser with open-vocabulary part segmentation.
+* [OpenSeed](https://github.com/IDEA-Research/OpenSeeD): Strong open-set segmentation methods based on Mask DINO. We base on it to implement our open-vocabulary segmentation.
+* [SEEM](https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once): Segment using a wide range of user prompts.
+* [VLPart](https://github.com/facebookresearch/VLPart): Going denser with open-vocabulary part segmentation.
 ## Getting Started
 
 ### Installation
@@ -152,6 +152,6 @@ We also outperform SAM on both mask quality and granularity completeness, please
 
 - [ ] Release demo with semantics
   
-- [ ] Release code and checkpoints trained on SA-1B and semantically-labelled datasets
+- [ ] Release code and checkpoints trained on SA-1B and semantically-labeled datasets
 
 </details>
