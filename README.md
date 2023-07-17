@@ -2,7 +2,7 @@
 In this work, we introduce **Semantic-SAM**, a universal image segmentation model to enable segment and recognize anything at any desired granularity.
 We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM and beyond it**.
 
-:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo](http://semantic-sam.xyzou.net:6081/)\]  &nbsp; :apple: \[[Try Auto-Generation Demo](https://e39b5df85bef7a7f80.gradio.live)\]
+:grapes: \[[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; :apple: \[[Try Gradio Demo](http://semantic-sam.xyzou.net:6081/)\]  &nbsp; :apple: \[[Try Auto-Generation Demo](https://fb1868d093cbae155d.gradio.live)\]
 
 ### :rocket: Features
 :fire: **Reproduce SAM**. SAM training is a sub-task of ours. We have released the training code to reproduce SAM training.
