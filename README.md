@@ -19,9 +19,10 @@ We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM
 * We release the **training code to reproduce SAM!**
 
 ![teaser_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/769a0c28-bcdf-42ac-b418-17961c1f2430)
-One-click to output up to 6 granularity masks. Try it in our demo!
+:fire: One-click to output up to 6 granularity masks. Try it in our demo!
 ![character](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/10554e8c-e7cf-463b-875e-0792e629315e)
-
+:fire: Segment everything for one image. We output more masks with more granularity.
+![auto](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/c8672450-0d1f-48b3-8227-ec669263d3b5)
 
 Our model supports a wide range of segmentation tasks and their related applications, including:
 
