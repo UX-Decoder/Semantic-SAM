@@ -83,6 +83,16 @@ The currently released checkpoints are only trained with SA-1B data.
 
 </tbody></table>
 
+### Demo
+For interactive segmentation.
+```shell
+python demo.py
+```
+For mask auto-generation.
+```shell
+python demo_auto_generation.py
+```
+
 ### Evaluation
 We do zero-shot evaluation on COCO val2017.
 `$n` is the number of gpus you use
@@ -120,13 +130,7 @@ python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_o
 python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_reproduce_sam_swinL.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n MODEL.WEIGHTS=/path/to/weights
 ```
 This is a swinL backbone. The only difference of this script is to use many-to-one matching and 3 prompts as in SAM.
-### Demo
-```shell
-python demo.py
-```
-```shell
-python demo_auto_generation.py
-```
+
 ## Comparison with SAM and SA-1B Ground-truth
 ![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6c7b50eb-6fe4-4a4f-b3cb-71920e30193e)
 
