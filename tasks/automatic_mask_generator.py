@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Tuple
 # from
 # from .modeling import Sam
 # from .predictor import SamPredictor
-from sam_utils.amg import (
+from utils.sam_utils.amg import (
     MaskData,
     area_from_rle,
     batch_iterator,

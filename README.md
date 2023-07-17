@@ -124,6 +124,9 @@ This is a swinL backbone. The only difference of this script is to use many-to-o
 ```shell
 python demo.py
 ```
+```shell
+python demo_auto_generation.py
+```
 ## Comparison with SAM and SA-1B Ground-truth
 ![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6c7b50eb-6fe4-4a4f-b3cb-71920e30193e)
 
