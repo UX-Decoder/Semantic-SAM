@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 # Copyright (c) MicroSoft, Inc. and its affiliates.
-# Modified from DINO https://github.com/IDEA-Research/MaskDINO by Feng Li.
+# Modified from Mask DINO https://github.com/IDEA-Research/MaskDINO by Feng Li (fliay@connect.ust.hk).
 # ------------------------------------------------------------------------
 
 """

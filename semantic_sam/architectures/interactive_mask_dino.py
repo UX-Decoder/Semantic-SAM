@@ -1,4 +1,7 @@
-# Copyright (c) Microsoft, Inc. and its affiliates.
+# ------------------------------------------------------------------------
+# Copyright (c) MicroSoft, Inc. and its affiliates.
+# Modified from OpenSeed https://github.com/IDEA-Research/OpenSeed by Feng Li (fliay@connect.ust.hk).
+# ------------------------------------------------------------------------
 from typing import Tuple
 
 import torch
