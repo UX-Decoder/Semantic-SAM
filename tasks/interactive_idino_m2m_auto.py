@@ -28,9 +28,8 @@ def interactive_infer_image(model, image,all_classes,all_parts, thresh,text_size
     images = torch.from_numpy(image_ori.copy()).permute(2,0,1).cuda()
 
     mask_generator = SamAutomaticMaskGenerator(model,points_per_side=32,
-            pred_iou_thresh=0.86,
-            stability_score_thresh=0.92,
-            min_mask_region_area=100
+            pred_iou_thresh=0.7,
+            stability_score_thresh=0.9,
         )
 
     outputs = mask_generator.generate(images)
