@@ -35,7 +35,7 @@ Our model supports a wide range of segmentation tasks and their related applicat
 :fire: **Related projects:**
 
 * [Mask DINO](https://github.com/IDEA-Research/MaskDINO): We build upon Mask DINO which is a unified detection and segmentation model to implement our model.
-* [OpenSeed](https://github.com/IDEA-Research/OpenSeeD): Strong open-set segmentation methods based on Mask DINO. We base on it to implement our open-vocabulary segmentation.
+* [OpenSeeD](https://github.com/IDEA-Research/OpenSeeD): Strong open-set segmentation methods based on Mask DINO. We base on it to implement our open-vocabulary segmentation.
 * [SEEM](https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once): Segment using a wide range of user prompts.
 * [VLPart](https://github.com/facebookresearch/VLPart): Going denser with open-vocabulary part segmentation.
 ## Getting Started
@@ -67,19 +67,19 @@ The currently released checkpoints are only trained with SA-1B data.
 <th valign="bottom">1-IoU@COCO(Max|Oracle)</th>
 <th valign="bottom">download</th>
 
- <tr><td align="left">Semantic-SAM | <a href="configs/semantic_sam_only_sa-1b_swinL.yaml">config</a></td>
-<td align="center">SA-1B</td>
-<td align="center">SwinL</td>
-<td align="center">89.0</td>
-<td align="center">55.1|74.1</td>
-<td align="center"><a href="https://github.com/UX-Decoder/Semantic-SAM/releases/download/checkpoint/swinl_only_sam_many2many.pth">model</a></td>
-
  <tr><td align="left">Semantic-SAM | <a href="configs/semantic_sam_only_sa-1b_swinT.yaml">config</a></td>
 <td align="center">SA-1B</td>
 <td align="center">SwinT</td>
 <td align="center">88.1</td>
 <td align="center">54.5|73.8</td>
 <td align="center"><a href="https://github.com/UX-Decoder/Semantic-SAM/releases/download/checkpoint/swint_only_sam_many2many.pth">model</a></td>
+   
+ <tr><td align="left">Semantic-SAM | <a href="configs/semantic_sam_only_sa-1b_swinL.yaml">config</a></td>
+<td align="center">SA-1B</td>
+<td align="center">SwinL</td>
+<td align="center">89.0</td>
+<td align="center">55.1|74.1</td>
+<td align="center"><a href="https://github.com/UX-Decoder/Semantic-SAM/releases/download/checkpoint/swinl_only_sam_many2many.pth">model</a></td>
 
 </tbody></table>
 
