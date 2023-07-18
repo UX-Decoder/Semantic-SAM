@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------
-# Copyright (c) 2023 MicroSoft. All Rights Reserved.
-# Licensed under the Apache License, Version 2.0 [see LICENSE for details]
-# by Feng Li.
+# Copyright (c) MicroSoft, Inc. and its affiliates.
+# Modified from OpenSeed https://github.com/IDEA-Research/OpenSeed by Feng Li (fliay@connect.ust.hk).
 # ------------------------------------------------------------------------
 """
 Semantic-SAM training and inference script. based on MaskDINO and OpenSeed.
