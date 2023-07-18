@@ -242,7 +242,7 @@ class SamAutomaticMaskGenerator:
         # Generate masks for this crop in batches
         data = MaskData()
         # import pdb;pdb.set_trace()
-        for (points,) in batch_iterator(self.points_per_batch, points_for_image):
+        for (points,) in batch_iterator(len(points_for_image), points_for_image):
             batch_data = self._process_batch(cropped_im,points, cropped_im_size, crop_box, orig_size)
             data.cat(batch_data)
             del batch_data

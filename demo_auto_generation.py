@@ -47,7 +47,7 @@ cfgs={'T':"configs/semantic_sam_only_sa-1b_swinT.yaml",
 
 # audio = whisper.load_model("base")
 sam_cfg=cfgs['L']
-
+args.ckpt="/home/t-zhangha/azure_data/output/fengli/joint_part_idino/train_interactive_all_m2m_swinL_bs16_0.1part9_nohash_bs1_resume_all_local_0.15_onlysa_swinL_4node_mnode/model_0099999.pth"
 opt = load_opt_from_config_file(sam_cfg)
 model_sam = BaseModel(opt, build_model(opt)).from_pretrained(args.ckpt).eval().cuda()
 # model_sam = BaseModel(opt, build_model(opt)).eval().cuda()
