@@ -116,7 +116,6 @@ def sem_seg_postprocess(result, img_size, output_height, output_width):
             (C, output_height, output_width) that contains per-pixel soft predictions.
     """
     result = result[:, : img_size[0], : img_size[1]].expand(1, -1, -1, -1)
-    import pdb;pdb.set_trace()
     result = F.interpolate(
         result, size=(output_height, output_width), mode="bicubic", align_corners=False, antialias=True
     )[0]
