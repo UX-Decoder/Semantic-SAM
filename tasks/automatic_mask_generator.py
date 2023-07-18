@@ -242,7 +242,8 @@ class SamAutomaticMaskGenerator:
         # Generate masks for this crop in batches
         data = MaskData()
         # import pdb;pdb.set_trace()
-        for (points,) in batch_iterator(len(points_for_image), points_for_image):
+        self.enc_features=None
+        for (points,) in batch_iterator(self.points_per_batch, points_for_image):
             batch_data = self._process_batch(cropped_im,points, cropped_im_size, crop_box, orig_size)
             data.cat(batch_data)
             del batch_data
@@ -275,27 +276,6 @@ class SamAutomaticMaskGenerator:
     ) -> MaskData:
         orig_h, orig_w = orig_size
 
-        # Run model on this batch
-        # transformed_points = self.predictor.transform.apply_coords(points, im_size)
-        # in_points = torch.as_tensor(transformed_points, device=self.predictor.device)
-        # in_labels = torch.ones(in_points.shape[0], dtype=torch.int, device=in_points.device)
-        # masks, iou_preds, _ = self.predictor.predict_torch(
-        #     in_points[:, None, :],
-        #     in_labels[:, None],
-        #     multimask_output=True,
-        #     return_logits=True,
-        # )
-        # points=mask_ori.nonzero().float().to(images.device)
-        # if len(points)==0:
-        #     point=points.new_tensor([[0.5,0.5,0.006,0.006]])
-        # else:
-        #     point_=points.mean(0)[None]
-        #     point=point_.clone()
-        #     point[0, 0] = point_[0, 0] / mask_ori.shape[0]
-        #     point[0, 1] = point_[0, 1] / mask_ori.shape[1]
-        #     point = point[:, [1, 0]]
-        #     point=torch.cat([point,points.new_tensor([[0.005,0.005]])],dim=-1)
-        # import pdb;pdb.set_trace()
         data = {"image": images, "height": orig_h, "width": orig_w}
         points=torch.tensor(points,dtype=torch.float).to(images.device)
         points = torch.cat([points, points.new_tensor([[0.005, 0.005]]).repeat(len(points), 1)], dim=-1)
@@ -303,11 +283,12 @@ class SamAutomaticMaskGenerator:
         data['targets'][0]['points']=points
         data['targets'][0]['pb']=points.new_tensor([0.]*len(points))
         batch_inputs = [data]
+        if self.enc_features is None:
+            masks, iou_preds,mask_features,multi_scale_features= self.predictor.model.evaluate_demo(batch_inputs,None,None,return_features=True)
+            self.enc_features=(mask_features,multi_scale_features)
+        else:
+            masks, iou_preds,mask_features,multi_scale_features= self.predictor.model.evaluate_demo(batch_inputs,None,None,self.enc_features[0],self.enc_features[1])
 
-        masks, iou_preds= self.predictor.model.evaluate_demo(batch_inputs,None,None)
-        # masks,iou_preds=masks[0],iou_preds[0]
-
-        # Serialize predictions and store in MaskData
         data = MaskData(
             masks=masks,
             iou_preds=iou_preds.flatten(),
