@@ -298,7 +298,7 @@ class GeneralizedMaskDINO(nn.Module):
                                                                       device=self.device) / torch.as_tensor(
             [padded_w, padded_h, padded_w, padded_h], dtype=torch.float, device=self.device)
 
-        if mask_features is not None and multi_scale_features is not None:
+        if mask_features is None or multi_scale_features is None:
 
             features = self.backbone(images.tensor)
             mask_features, transformer_encoder_features, multi_scale_features = self.sem_seg_head.pixel_decoder.forward_features(
