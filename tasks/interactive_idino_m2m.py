@@ -33,7 +33,7 @@ def interactive_infer_image(model, image,all_classes,all_parts, thresh,text_size
     mask_ori = torch.from_numpy(mask_ori).permute(2,0,1)[0]
     points=mask_ori.nonzero().float().to(images.device)
     if len(points)==0:
-        point=points.new_tensor([[0.5,0.5,0.006,0.006]])
+        point_=point=points.new_tensor([[0.5,0.5,0.006,0.006]])
     else:
         point_=points.mean(0)[None]
         point=point_.clone()

@@ -285,35 +285,29 @@ class GeneralizedMaskDINO(nn.Module):
     def device(self):
         return self.pixel_mean.device
 
-    def evaluate_demo(self, batched_inputs,all_whole,all_parts):
+    def evaluate_demo(self, batched_inputs,all_whole,all_parts,mask_features=None,multi_scale_features=None,return_features=False):
         assert len(batched_inputs) == 1, "only support batch size equal to 1"
+        prediction_switch = {'part': False, 'whole': False, 'seg': True, 'det': True}
         images = [x["image"].to(self.device) for x in batched_inputs]
         images = [(x - self.pixel_mean) / self.pixel_std for x in images]
         images = ImageList.from_tensors(images, self.size_divisibility)
-        features = self.backbone(images.tensor)
-        #batch inputs: point_coords
-        prediction_switch = {'part': False, 'whole': False, 'seg': True, 'det': True}
-        targets=batched_inputs[0]['targets']
+        targets = batched_inputs[0]['targets']
         height = images[0].shape[1]
         width = images[0].shape[2]
         padded_h = images.tensor.shape[-2]  # divisable to 32
         padded_w = images.tensor.shape[-1]
         # import pdb;pdb.set_trace()
-        targets[0]['points']=targets[0]['points'] * torch.as_tensor([width, height, width, height], dtype=torch.float, device=self.device)/torch.as_tensor([padded_w, padded_h, padded_w, padded_h], dtype=torch.float, device=self.device)
+        targets[0]['points'] = targets[0]['points'] * torch.as_tensor([width, height, width, height], dtype=torch.float,
+                                                                      device=self.device) / torch.as_tensor(
+            [padded_w, padded_h, padded_w, padded_h], dtype=torch.float, device=self.device)
 
-        # if 'masks' not in targets[0].keys():
-        #     print('mask_iou is 0')
-        #     return [{"mask_iou": torch.tensor([1.0]).cuda()}]
-        # if prediction_switch['whole']:
-        # train_class_names = all_whole
-        # self.sem_seg_head.predictor.lang_encoder.get_text_embeddings(train_class_names, name='whole', is_eval=False)
-        # if prediction_switch['part']:
-        # train_class_names = all_parts
-        # self.sem_seg_head.predictor.lang_encoder.get_text_embeddings(train_class_names, name='part', is_eval=False)
-        # import pdb;pdb.set_trace()
-        all_batch_shape_iou = []
-        outputs, mask_dict = self.sem_seg_head(features, targets=targets, task='demo', extra=prediction_switch)
+        if mask_features is None or multi_scale_features is None:
 
+            features = self.backbone(images.tensor)
+            mask_features, transformer_encoder_features, multi_scale_features = self.sem_seg_head.pixel_decoder.forward_features(
+                features, None)
+        outputs, mask_dict = self.sem_seg_head.predictor(multi_scale_features, mask_features, None, targets=targets,
+                                     target_queries=None, target_vlp=None, task='demo', extra=prediction_switch)
         # mask_box_results = outputs["pred_boxes"]
         pred_ious=None
         if 'pred_ious' in outputs.keys():
@@ -341,7 +335,10 @@ class GeneralizedMaskDINO(nn.Module):
             pred_masks = retry_if_cuda_oom(sem_seg_postprocess)(
                 pred_masks, image_size, height, width
             )
-        return pred_masks,pred_ious
+        if return_features:
+            return pred_masks,pred_ious,mask_features,multi_scale_features
+        else:
+            return pred_masks,pred_ious
 
 
     def forward(self, batched_inputs, inference_task='seg'):
