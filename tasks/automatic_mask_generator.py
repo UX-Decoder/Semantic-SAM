@@ -287,7 +287,7 @@ class SamAutomaticMaskGenerator:
             masks, iou_preds,mask_features,multi_scale_features= self.predictor.model.evaluate_demo(batch_inputs,None,None,return_features=True)
             self.enc_features=(mask_features,multi_scale_features)
         else:
-            masks, iou_preds,mask_features,multi_scale_features= self.predictor.model.evaluate_demo(batch_inputs,None,None,self.enc_features[0],self.enc_features[1])
+            masks, iou_preds= self.predictor.model.evaluate_demo(batch_inputs,None,None,self.enc_features[0],self.enc_features[1])
 
         data = MaskData(
             masks=masks,
