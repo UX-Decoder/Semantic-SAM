@@ -98,7 +98,7 @@ title='''
 
 # [[Read our arXiv Paper](https://arxiv.org/pdf/2307.04767.pdf)\] &nbsp; \[[Github page](https://github.com/UX-Decoder/Semantic-SAM)\] 
 
-# Auto generation demo. The demo is a little slow. Please wait for a few minutes.
+# Auto generation demo.
 '''
 def change_vocab(choice):
     if choice:
