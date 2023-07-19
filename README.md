@@ -49,7 +49,7 @@ Our model supports a wide range of segmentation tasks and their related applicat
 * [VLPart](https://github.com/facebookresearch/VLPart): Going denser with open-vocabulary part segmentation.
 ## :unicorn: Getting Started
 
-### Installation
+### :hammer_and_wrench: Installation
 ```shell
 pip3 install torch==1.13.1 torchvision==0.14.1 --extra-index-url https://download.pytorch.org/whl/cu113
 python -m pip install 'git+https://github.com/MaureenZOU/detectron2-xyz.git'
@@ -61,10 +61,10 @@ python -m pip install -r requirements.txt
 export DATASET=/pth/to/dataset  # path to your coco data
 ```
 
-### Data preparation
+### :mosque: Data preparation
 Please refer to [prepare SA-1B data](DATASET.md). Let us know if you need more instructions about it.
 
-### Model Zoo
+### :volcano: Model Zoo
 The currently released checkpoints are only trained with SA-1B data. 
 <table><tbody>
 <!-- START TABLE -->
@@ -92,7 +92,7 @@ The currently released checkpoints are only trained with SA-1B data.
 
 </tbody></table>
 
-### Demo
+### :arrow_forward: Demo
 For interactive segmentation.
 ```shell
 python demo.py
@@ -102,7 +102,7 @@ For mask auto-generation.
 python demo_auto_generation.py
 ```
 
-### Evaluation
+### :sunflower: Evaluation
 We do zero-shot evaluation on COCO val2017.
 `$n` is the number of gpus you use
 
@@ -114,7 +114,7 @@ For SwinT backbone
 ```shell
 python train_net.py --eval_only --resume --num-gpus $n --config-file configs/semantic_sam_only_sa-1b_swinT.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  MODEL.WEIGHTS=/path/to/weights
 ```
-### Training 
+### :star: Training 
 We currently release the code of training on SA-1B only. Complete training with semantics will be released later.
 `$n` is the number of gpus you use
 before running the training code, you need to specify your training data of SA-1B.
@@ -140,27 +140,27 @@ python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_r
 ```
 This is a swinL backbone. The only difference of this script is to use many-to-one matching and 3 prompts as in SAM.
 
-## Comparison with SAM and SA-1B Ground-truth
+## 👀 Comparison with SAM and SA-1B Ground-truth
 ![compare_sam_v3](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/6c7b50eb-6fe4-4a4f-b3cb-71920e30193e)
 
 (a)(b) are the output masks of our model and SAM, respectively. The red points on the left-most image of each row are the user clicks. (c) shows the GT masks that contain the user clicks. The outputs of our model have been processed to remove duplicates.
-## Learned prompt semantics
+## :deciduous_tree: Learned prompt semantics
 ![levels](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/d4c3df78-ba07-4f09-9d4f-e5d4f2fc7f45)
 
 We visualize the prediction of each content prompt embedding of points with a fixed order
 for our model. We find all the output masks are from small to large. This indicates each prompt
 embedding represents a semantic level. The red point in the first column is the click.
 
-## Method
+## :sauropod: Method
 ![method_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/8e8150a4-a1de-49a6-a817-3c43cf55871b)
 
-## Experiments
+## :medal_military: Experiments
 We also show that jointly training SA-1B interactive segmentation and generic segmentation can improve the generic segmentation performance.
 ![coco](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/b4963761-ef36-47bb-b960-9884b86dce5b)
 
 We also outperform SAM on both mask quality and granularity completeness, please refer to our paper for more experimental details.
 <details open>
-<summary> <font size=8><strong>Todo list</strong></font> </summary>
+<summary> <font size=8><strong>:bookmark_tabs: Todo list</strong></font> </summary>
 
 - [x] Release demo
   
@@ -171,3 +171,21 @@ We also outperform SAM on both mask quality and granularity completeness, please
 - [ ] Release code and checkpoints trained on SA-1B and semantically-labeled datasets
 
 </details>
+
+## :hearts: Acknowledgement
+
+Our model is related to [Mask DINO](https://github.com/IDEA-Research/MaskDINO) and [OpenSeeD](https://github.com/IDEA-Research/OpenSeeD). We also thank [Segment Anything](https://github.com/facebookresearch/segment-anything) for the SA-1B data.
+
+
+## :black_nib: Citation
+
+If you find our work helpful for your research, please consider citing the following BibTeX entry.   
+
+```bibtex
+@article{li2023semantic,
+  title={Semantic-SAM: Segment and Recognize Anything at Any Granularity},
+  author={Li, Feng and Zhang, Hao and Sun, Peize and Zou, Xueyan and Liu, Shilong and Yang, Jianwei and Li, Chunyuan and Zhang, Lei and Gao, Jianfeng},
+  journal={arXiv preprint arXiv:2307.04767},
+  year={2023}
+}
+}
