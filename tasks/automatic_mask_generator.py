@@ -48,6 +48,7 @@ class SamAutomaticMaskGenerator:
         point_grids: Optional[List[np.ndarray]] = None,
         min_mask_region_area: int = 0,
         output_mode: str = "binary_mask",
+        level: list = [0],
     ) -> None:
         """
         Using a SAM model, generates masks for the entire image.
@@ -93,7 +94,7 @@ class SamAutomaticMaskGenerator:
             For large resolutions, 'binary_mask' may consume large amounts of
             memory.
         """
-
+        self.level = level
         assert (points_per_side is None) != (
             point_grids is None
         ), "Exactly one of points_per_side or point_grid must be provided."
@@ -168,7 +169,6 @@ class SamAutomaticMaskGenerator:
                 self.min_mask_region_area,
                 max(self.box_nms_thresh, self.crop_nms_thresh),
             )
-        # import pdb;pdb.set_trace()
         # Encode masks
         if self.output_mode == "coco_rle":
             mask_data["segmentations"] = [coco_encode_rle(rle) for rle in mask_data["rles"]]
@@ -204,6 +204,7 @@ class SamAutomaticMaskGenerator:
         data = MaskData()
         for crop_box, layer_idx in zip(crop_boxes, layer_idxs):
             crop_data = self._process_crop(image, crop_box, layer_idx, orig_size)
+
             data.cat(crop_data)
 
         # Remove duplicate masks between crops
@@ -241,16 +242,12 @@ class SamAutomaticMaskGenerator:
 
         # Generate masks for this crop in batches
         data = MaskData()
-        # import pdb;pdb.set_trace()
         self.enc_features=None
         for (points,) in batch_iterator(self.points_per_batch, points_for_image):
             batch_data = self._process_batch(cropped_im,points, cropped_im_size, crop_box, orig_size)
             data.cat(batch_data)
             del batch_data
-        # self.predictor.reset_image()
 
-        # Remove duplicates within this crop.
-        # import pdb;pdb.set_trace()
         keep_by_nms = batched_nms(
             data["boxes"].float(),
             data["iou_preds"],
@@ -261,7 +258,6 @@ class SamAutomaticMaskGenerator:
 
         # Return to the original image frame
         data["boxes"] = uncrop_boxes_xyxy(data["boxes"], crop_box)
-        # data["points"] = uncrop_points(data["points"], crop_box)
         data["crop_boxes"] = torch.tensor([crop_box for _ in range(len(data["rles"]))])
 
         return data
@@ -284,20 +280,18 @@ class SamAutomaticMaskGenerator:
         data['targets'][0]['pb']=points.new_tensor([0.]*len(points))
         batch_inputs = [data]
         if self.enc_features is None:
-            masks, iou_preds,mask_features,multi_scale_features= self.predictor.model.evaluate_demo(batch_inputs,None,None,return_features=True)
+            masks, iou_preds,mask_features,multi_scale_features= self.predictor.model.evaluate_demo(batch_inputs,None,None,return_features=True, level=self.level)
             self.enc_features=(mask_features,multi_scale_features)
         else:
-            masks, iou_preds= self.predictor.model.evaluate_demo(batch_inputs,None,None,self.enc_features[0],self.enc_features[1])
-
+            masks, iou_preds= self.predictor.model.evaluate_demo(batch_inputs,None,None,self.enc_features[0],self.enc_features[1], level=self.level)
+        # import ipdb; ipdb.set_trace()
         data = MaskData(
             masks=masks,
             iou_preds=iou_preds.flatten(),
-            points=torch.as_tensor(points[:,None].repeat(1,6, 1).view(-1,4)),
+            points=torch.as_tensor(points[:,None].repeat(1,len(self.level), 1).view(-1,4)),
         )
         del masks
-
         # Filter by predicted IoU
-        # if self.pred_iou_thresh > 0.0:
         keep_mask = data["iou_preds"] > self.pred_iou_thresh
         data.filter(keep_mask)
 

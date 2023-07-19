@@ -18,7 +18,7 @@ import io
 from .automatic_mask_generator import SamAutomaticMaskGenerator
 metadata = MetadataCatalog.get('coco_2017_train_panoptic')
 
-def interactive_infer_image(model, image,all_classes,all_parts, thresh,text_size,hole_scale,island_scale,semantic, refimg=None, reftxt=None, audio_pth=None, video_pth=None):
+def interactive_infer_image(model, image,level,all_classes,all_parts, thresh,text_size,hole_scale,island_scale,semantic, refimg=None, reftxt=None, audio_pth=None, video_pth=None):
     t = []
     t.append(transforms.Resize(int(text_size), interpolation=Image.BICUBIC))
     transform1 = transforms.Compose(t)
@@ -28,9 +28,10 @@ def interactive_infer_image(model, image,all_classes,all_parts, thresh,text_size
     images = torch.from_numpy(image_ori.copy()).permute(2,0,1).cuda()
 
     mask_generator = SamAutomaticMaskGenerator(model,points_per_side=32,
-            pred_iou_thresh=0.86,
+            pred_iou_thresh=0.88,
             stability_score_thresh=0.92,
-            min_mask_region_area=100
+            min_mask_region_area=10,
+            level=level,
         )
 
     outputs = mask_generator.generate(images)
@@ -38,11 +39,6 @@ def interactive_infer_image(model, image,all_classes,all_parts, thresh,text_size
     fig=plt.figure(figsize=(10, 10))
     plt.imshow(image_ori)
     show_anns(outputs)
-    # import pdb;pdb.set_trace()
-    # img_buf = io.BytesIO()
-    # with open('/tmp/gradio/img_buf.png')
-    # plt.savefig('/tmp/gradio/img_buf.png', format='png',bbox_inches='tight')
-    # im = Image.open('/tmp/gradio/img_buf.png')
     fig.canvas.draw()
     im=Image.frombytes('RGB',
                         fig.canvas.get_width_height(), fig.canvas.tostring_rgb())

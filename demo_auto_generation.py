@@ -50,14 +50,35 @@ sam_cfg=cfgs['L']
 opt = load_opt_from_config_file(sam_cfg)
 model_sam = BaseModel(opt, build_model(opt)).from_pretrained(args.ckpt).eval().cuda()
 # model_sam = BaseModel(opt, build_model(opt)).eval().cuda()
+
 @torch.no_grad()
-def inference(image,*args, **kwargs):
+def inference(image,level=[0],*args, **kwargs):
+    def prompt_switch(p):
+        p=int(p)
+        if p==1:
+            return 3
+        if p==2:
+            return 2
+        if p==3:
+            return 0
+        if p==4:
+            return 4
+        if p==5:
+            return 1
+        if p==6:
+            return 5
+    if level == 'All Prompt':
+        level = [0, 1, 2, 3, 4, 5]
+    else:
+        le = [level.split(' ')[-1]]
+        level = [prompt_switch(l) for l in le]
+    print(level)
     text_size, hole_scale, island_scale=640,100,100
     text, text_part, text_thresh='','','0.0'
     with torch.autocast(device_type='cuda', dtype=torch.float16):
         semantic=False
         model=model_sam
-        a= interactive_infer_image_idino_m2m_auto(model, image,text,text_part,text_thresh,text_size,hole_scale,island_scale,semantic, *args, **kwargs)
+        a= interactive_infer_image_idino_m2m_auto(model, image,level,text,text_part,text_thresh,text_size,hole_scale,island_scale,semantic, *args, **kwargs)
         return a
 
 
@@ -90,6 +111,8 @@ all_parts=['arm', 'beak', 'body', 'cap', 'door', 'ear', 'eye', 'foot', 'hair', '
 
 demo = gr.Blocks()
 image=ImageMask(label="Click on Image (Please only click one point, or our model will take the center of all points as the clicked location. Remember to clear the click after each interaction, or we will take the center of the current click and previous ones as the clicked location.)",type="pil",brush_radius=15.0).style(height=512)
+text_model_level=gr.components.Textbox(label="Output levels",value="0,1,2,3,4,5",visible=True)
+text_model_select=gr.components.Radio(['Prompt 1', 'Prompt 2', 'Prompt 3', 'Prompt 4', 'Prompt 5', 'Prompt 6', 'All Prompt',],value='All Prompt', label="Our model learns 6 granularity prompts. [1-6] indicates output granularity from largest to smallest using different prompts.  'All prompt' means using all 6 granularity prompts.")
 image_out=gr.components.Image(label="Auto generation",type="pil",brush_radius=15.0).style(height=512)
 
 title='''
@@ -112,10 +135,23 @@ with demo:
             generation_tittle = gr.Markdown(title)
             with gr.Row(scale=20.0):
                 image.render()
+            with gr.Column(scale=1.0):
+                text_model_select.render()
+            example1 = gr.Examples(
+                examples=[
+                    ["examples/levels_dog.png"],
+
+                ],
+                inputs=image,
+                label='Example output of using different prompts for one image, output masks are from semantic, instance, to part level',
+
+                cache_examples=False,
+            )
             example = gr.Examples(
                 examples=[
                     ["examples/tank.png"],
                     ["examples/castle.png"],
+                    ["examples/dog.jpg"],
                     ["examples/fries1.png"],
                     ["examples/4.png"],
                     ["examples/5.png"],
@@ -141,8 +177,7 @@ with demo:
     title = title,
     article = article,
     allow_flagging = 'never',
-
-    runBtn.click(inference, inputs=[image],
+    runBtn.click(inference, inputs=[image, text_model_select],
               outputs = image_out)
 
 

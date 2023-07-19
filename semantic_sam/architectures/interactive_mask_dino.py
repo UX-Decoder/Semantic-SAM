@@ -285,7 +285,7 @@ class GeneralizedMaskDINO(nn.Module):
     def device(self):
         return self.pixel_mean.device
 
-    def evaluate_demo(self, batched_inputs,all_whole,all_parts,mask_features=None,multi_scale_features=None,return_features=False):
+    def evaluate_demo(self, batched_inputs,all_whole,all_parts,mask_features=None,multi_scale_features=None,return_features=False, level=[0]):
         assert len(batched_inputs) == 1, "only support batch size equal to 1"
         prediction_switch = {'part': False, 'whole': False, 'seg': True, 'det': True}
         images = [x["image"].to(self.device) for x in batched_inputs]
@@ -296,7 +296,7 @@ class GeneralizedMaskDINO(nn.Module):
         width = images[0].shape[2]
         padded_h = images.tensor.shape[-2]  # divisable to 32
         padded_w = images.tensor.shape[-1]
-        # import pdb;pdb.set_trace()
+
         targets[0]['points'] = targets[0]['points'] * torch.as_tensor([width, height, width, height], dtype=torch.float,
                                                                       device=self.device) / torch.as_tensor(
             [padded_w, padded_h, padded_w, padded_h], dtype=torch.float, device=self.device)
@@ -308,12 +308,14 @@ class GeneralizedMaskDINO(nn.Module):
                 features, None)
         outputs, mask_dict = self.sem_seg_head.predictor(multi_scale_features, mask_features, None, targets=targets,
                                      target_queries=None, target_vlp=None, task='demo', extra=prediction_switch)
-        # mask_box_results = outputs["pred_boxes"]
         pred_ious=None
         if 'pred_ious' in outputs.keys():
             pred_ious = outputs["pred_ious"]
 
-        mask_pred_results = outputs["pred_masks"]
+        mask_pred_results = outputs["pred_masks"].view(pred_ious.shape[0], pred_ious.shape[1], pred_ious.shape[2], outputs["pred_masks"].shape[-2], outputs["pred_masks"].shape[-1])
+        level = torch.tensor(level).cuda()
+        mask_pred_results = torch.index_select(mask_pred_results, 2, level).flatten(1, 2)
+        pred_ious = torch.index_select(pred_ious, -1, level)
         # upsample masks
         mask_pred_results = F.interpolate(
             mask_pred_results,
@@ -330,7 +332,7 @@ class GeneralizedMaskDINO(nn.Module):
         height = image_size[0]
         # width = input_per_image.get("width", image_size[1])
         width = image_size[1]
-        # new_size = (images.tensor.shape[-2], images.tensor.shape[-1])  # padded size (divisible to 32)
+        # import ipdb; ipdb.set_trace()
         if self.sem_seg_postprocess_before_inference:
             pred_masks = retry_if_cuda_oom(sem_seg_postprocess)(
                 pred_masks, image_size, height, width
