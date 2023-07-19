@@ -13,19 +13,23 @@ We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM
 * **High Quality**. We base on the DETR-based model to implement both generic and interactive segmentation, and validate that SA-1B helps generic and part segmentation. The mask quality of multi-granularity is high.
 
 ### :rocket: **News** 
-* We release the **demo code for controllable mask auto-generation with different granularity prompts!**
-* We release the **demo code for mask auto-generation!**
-* We release the **demo code for interactive segmentation!**
-* We release the **training and inference code and checkpoints (SwinT, SwinL) trained on SA-1B!**
-* We release the **training code to reproduce SAM!**
+:fire: We release the **demo code for controllable mask auto-generation with different granularity prompts!**
+![auto](examples/levels_dog.png)
+Segment everything for one image. We output **controllable granularity** masks from **semantic, instance to part level** when using different granularity prompts.
+
+:fire: We release the **demo code for mask auto-generation!**
+![auto](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/c8672450-0d1f-48b3-8227-ec669263d3b5)
+Segment everything for one image. We output more masks with more granularity.
+
+:fire: We release the **demo code for interactive segmentation!**
+![character](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/10554e8c-e7cf-463b-875e-0792e629315e)
+One click to output up to 6 granularity masks. Try it in our demo!
+
+:fire: We release the **training and inference code and checkpoints (SwinT, SwinL) trained on SA-1B!**
+
+:fire: We release the **training code to reproduce SAM!**
 
 ![teaser_xyz](https://github.com/UX-Decoder/Semantic-SAM/assets/11957155/769a0c28-bcdf-42ac-b418-17961c1f2430)
-:fire: One-click to output up to 6 granularity masks. Try it in our demo!
-![character](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/10554e8c-e7cf-463b-875e-0792e629315e)
-:fire: Segment everything for one image. We output **controllable granularity** masks from **semantic, instance to part level** when using different granularity prompts.
-![auto](examples/levels_dog.png)
-:fire: Segment everything for one image. We output more masks with more granularity.
-![auto](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/c8672450-0d1f-48b3-8227-ec669263d3b5)
 
 Our model supports a wide range of segmentation tasks and their related applications, including:
 
