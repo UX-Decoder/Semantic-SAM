@@ -175,5 +175,5 @@ with demo:
 
 
 
-demo.queue().launch(share=True,server_port=6081)
+demo.queue().launch(share=True,server_port=6082)
 
