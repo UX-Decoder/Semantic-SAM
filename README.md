@@ -20,7 +20,8 @@ We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM
 Segment everything for one image. We output **controllable granularity** masks from **semantic, instance to part level** when using different granularity prompts.
 
 :fire: We release the **demo code for mask auto-generation!**
-![auto](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/c8672450-0d1f-48b3-8227-ec669263d3b5)
+![tank_auto](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/ad634168-ea25-451f-960b-918803305073)
+
 Segment everything for one image. We output more masks with more granularity.
 
 :fire: We release the **demo code for interactive segmentation!**
