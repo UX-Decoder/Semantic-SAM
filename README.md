@@ -16,7 +16,8 @@ We have trained on the whole **SA-1B** dataset and our model can **reproduce SAM
 
 ### :rocket: **News** 
 :fire: We release the **demo code for controllable mask auto-generation with different granularity prompts!**
-![auto](examples/levels_dog.png)
+![levels_dog2](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/2089bd4a-fd9b-4b09-a615-6b373fe38f91)
+
 Segment everything for one image. We output **controllable granularity** masks from **semantic, instance to part level** when using different granularity prompts.
 
 :fire: We release the **demo code for mask auto-generation!**
