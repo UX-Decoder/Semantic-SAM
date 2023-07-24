@@ -285,7 +285,7 @@ class GeneralizedMaskDINO(nn.Module):
     def device(self):
         return self.pixel_mean.device
 
-    def evaluate_demo(self, batched_inputs,all_whole,all_parts,mask_features=None,multi_scale_features=None,return_features=False, level=[0]):
+    def evaluate_demo(self, batched_inputs,all_whole,all_parts,mask_features=None,multi_scale_features=None,return_features=False, level=[0,1,2,3,4,5]):
         assert len(batched_inputs) == 1, "only support batch size equal to 1"
         prediction_switch = {'part': False, 'whole': False, 'seg': True, 'det': True}
         images = [x["image"].to(self.device) for x in batched_inputs]
