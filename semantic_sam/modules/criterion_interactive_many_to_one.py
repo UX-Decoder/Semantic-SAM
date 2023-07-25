@@ -167,7 +167,6 @@ class SetCriterion(nn.Module):
         self.index_switch = {'part': torch.arange(0, self.num_mask_tokens - 1).cuda(),
                              'whole': torch.arange(self.num_mask_tokens - 1, self.num_mask_tokens).cuda(),
                              'all': torch.arange(0, self.num_mask_tokens).cuda(), }
-        print("iou_loss is ", iou_loss)
 
     def loss_labels_ce(self, outputs, targets, indices, num_masks):
         """Classification loss (NLL)
