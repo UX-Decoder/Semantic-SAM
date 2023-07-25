@@ -1,3 +1,10 @@
+# --------------------------------------------------------
+# Semantic-SAM: Segment and Recognize Anything at Any Granularity
+# Copyright (c) 2023 Microsoft
+# Licensed under The MIT License [see LICENSE for details]
+# Written by Feng Li (fliay@connect.ust.hk)
+# --------------------------------------------------------
+
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
@@ -10,6 +17,7 @@ from semantic_sam.BaseModel import BaseModel
 from semantic_sam import build_model
 from tasks.automatic_mask_generator import SemanticSamAutomaticMaskGenerator
 from tasks.interactive_idino_m2m_auto import show_anns
+from tasks.interactive_predictor import SemanticSAMPredictor
 
 
 def prepare_image(image_pth):
@@ -47,7 +55,6 @@ def plot_results(outputs, image_ori, save_path='../vis/'):
     """
     if not os.path.exists(save_path):
         os.mkdir(save_path)
-    fig = plt.figure(figsize=(10, 10))
     fig = plt.figure()
     plt.imshow(image_ori)
     plt.savefig('../vis/input.png')
@@ -56,3 +63,23 @@ def plot_results(outputs, image_ori, save_path='../vis/'):
     im = Image.frombytes('RGB', fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
     plt.savefig('../vis/example.png')
     return im
+
+def plot_multi_results(iou_sort_masks, area_sort_masks, image_ori, save_path='../vis/'):
+    """
+    plot input image and its reuslts
+    """
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
+    plt.imshow(image_ori)
+    plt.savefig('../vis/input.png')
+    def create_long_image(masks):
+        ims = []
+        for img in masks:
+            ims.append(img)
+        width, height = ims[0].size
+        result = Image.new(ims[0].mode, (width * len(ims), height))
+        for i, im in enumerate(ims):
+            result.paste(im, box=(i * width, 0))
+        return result
+    create_long_image(iou_sort_masks).save('../vis/all_results_sort_by_iou.png')
+    create_long_image(area_sort_masks).save('../vis/all_results_sort_by_areas.png')

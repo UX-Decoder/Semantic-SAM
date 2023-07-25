@@ -67,7 +67,7 @@ class SemanticSamAutomaticMaskGenerator:
         point_grids: Optional[List[np.ndarray]] = None,
         min_mask_region_area: int = 10,
         output_mode: str = "binary_mask",
-        level: list = [0, 1, 2, 3, 4, 5],
+        level: list = [1, 2, 3, 4, 5, 6],
     ) -> None:
         """
         Using a SAM model, generates masks for the entire image.

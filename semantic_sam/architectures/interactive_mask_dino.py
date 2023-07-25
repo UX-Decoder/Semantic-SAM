@@ -285,7 +285,7 @@ class GeneralizedMaskDINO(nn.Module):
     def device(self):
         return self.pixel_mean.device
 
-    def evaluate_demo(self, batched_inputs,all_whole,all_parts,mask_features=None,multi_scale_features=None,return_features=False, level=[0,1,2,3,4,5]):
+    def evaluate_demo(self, batched_inputs,all_whole=None,all_part=None,mask_features=None,multi_scale_features=None,return_features=False, level=[0,1,2,3,4,5]):
         assert len(batched_inputs) == 1, "only support batch size equal to 1"
         prediction_switch = {'part': False, 'whole': False, 'seg': True, 'det': True}
         images = [x["image"].to(self.device) for x in batched_inputs]
@@ -325,14 +325,10 @@ class GeneralizedMaskDINO(nn.Module):
         )
 
         pred_masks = mask_pred_results[0]
-
         image_size = images.image_sizes[0]
 
-        # height = input_per_image.get("height", image_size[0])
         height = image_size[0]
-        # width = input_per_image.get("width", image_size[1])
         width = image_size[1]
-        # import ipdb; ipdb.set_trace()
         if self.sem_seg_postprocess_before_inference:
             pred_masks = retry_if_cuda_oom(sem_seg_postprocess)(
                 pred_masks, image_size, height, width
