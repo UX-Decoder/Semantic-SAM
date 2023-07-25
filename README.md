@@ -62,7 +62,7 @@ python -m pip install -r requirements.txt
 
 export DATASET=/pth/to/dataset  # path to your coco data
 ```
-### :star: A few lines to get auto-generation results
+### :star: A few lines to get generated results
 First download a checkpoint from [model zoo](https://github.com/UX-Decoder/Semantic-SAM/releases/tag/checkpoint).
 * For interactive multi-granularity segmentation
 ```python
