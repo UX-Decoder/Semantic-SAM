@@ -31,14 +31,33 @@ from utils.sam_utils.amg import (
     uncrop_points,
 )
 
-class SamAutomaticMaskGenerator:
+
+def prompt_switch(p):
+    p = int(p)
+    if p == 1:
+        return 3
+    if p == 2:
+        return 2
+    if p == 3:
+        return 0
+    if p == 4:
+        return 4
+    if p == 5:
+        return 1
+    if p == 6:
+        return 5
+    else:
+        raise NotImplementedError
+
+
+class SemanticSamAutomaticMaskGenerator:
     def __init__(
         self,
         model,
         points_per_side: Optional[int] = 32,
         points_per_batch: int = 200,
         pred_iou_thresh: float = 0.88,
-        stability_score_thresh: float = 0.95,
+        stability_score_thresh: float = 0.92,
         stability_score_offset: float = 1.0,
         box_nms_thresh: float = 0.7,
         crop_n_layers: int = 0,
@@ -46,9 +65,9 @@ class SamAutomaticMaskGenerator:
         crop_overlap_ratio: float = 512 / 1500,
         crop_n_points_downscale_factor: int = 1,
         point_grids: Optional[List[np.ndarray]] = None,
-        min_mask_region_area: int = 0,
+        min_mask_region_area: int = 10,
         output_mode: str = "binary_mask",
-        level: list = [0],
+        level: list = [0, 1, 2, 3, 4, 5],
     ) -> None:
         """
         Using a SAM model, generates masks for the entire image.
@@ -94,7 +113,7 @@ class SamAutomaticMaskGenerator:
             For large resolutions, 'binary_mask' may consume large amounts of
             memory.
         """
-        self.level = level
+        self.level = [prompt_switch(l) for l in level]
         assert (points_per_side is None) != (
             point_grids is None
         ), "Exactly one of points_per_side or point_grid must be provided."

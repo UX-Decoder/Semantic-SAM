@@ -15,7 +15,7 @@ from detectron2.data import MetadataCatalog
 import matplotlib.pyplot as plt
 import cv2
 import io
-from .automatic_mask_generator import SamAutomaticMaskGenerator
+from .automatic_mask_generator import SemanticSamAutomaticMaskGenerator
 metadata = MetadataCatalog.get('coco_2017_train_panoptic')
 
 def interactive_infer_image(model, image,level,all_classes,all_parts, thresh,text_size,hole_scale,island_scale,semantic, refimg=None, reftxt=None, audio_pth=None, video_pth=None):
@@ -27,7 +27,7 @@ def interactive_infer_image(model, image,level,all_classes,all_parts, thresh,tex
     image_ori = np.asarray(image_ori)
     images = torch.from_numpy(image_ori.copy()).permute(2,0,1).cuda()
 
-    mask_generator = SamAutomaticMaskGenerator(model,points_per_side=32,
+    mask_generator = SemanticSamAutomaticMaskGenerator(model,points_per_side=32,
             pred_iou_thresh=0.88,
             stability_score_thresh=0.92,
             min_mask_region_area=10,
@@ -40,8 +40,7 @@ def interactive_infer_image(model, image,level,all_classes,all_parts, thresh,tex
     plt.imshow(image_ori)
     show_anns(outputs)
     fig.canvas.draw()
-    im=Image.frombytes('RGB',
-                        fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
+    im=Image.frombytes('RGB', fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
     return im
 
 

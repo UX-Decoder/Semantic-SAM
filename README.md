@@ -62,7 +62,25 @@ python -m pip install -r requirements.txt
 
 export DATASET=/pth/to/dataset  # path to your coco data
 ```
+### :star: A few lines to get results
+First download a checkpoint from [model zoo](#Model Zoo).
+```python
+from semantic_sam import prepare_image, plot_results, build_semantic_sam, SemanticSamAutomaticMaskGenerator
+semantic_sam=build_semantic_sam(model_type='model_type', ckpt='/your/ckpt/path')  # model_type: 'L' / 'T', depends on your checkpint
+mask_generator = SemanticSamAutomaticMaskGenerator(semantic_sam) # change `level` to select different input prompt, i.e, [0] for semantic level and [6] for part level.
+original_image, input_image = prepare_image(image_pth='examples/dog.jpg')  # change the image path to your image
+masks = mask_generator.generate(input_image)
 
+plot_results(masks, original_image, save_path='../vis/')  # results and original images will be saved at save_path
+```
+**Advanced usage:**
+* Level is set to [1,2,3,4,5,6] to use all six prompts by default
+* You can change the input prompt for controllable mask auto-generation to get the granularity results you want. An example is shown in [here](https://github.com/UX-Decoder/Semantic-SAM/assets/34880758/2089bd4a-fd9b-4b09-a615-6b373fe38f91)
+```python
+mask_generator = SemanticSamAutomaticMaskGenerator(semantic_sam, level=[1]) # [1] and [2] for semantic level.
+mask_generator = SemanticSamAutomaticMaskGenerator(semantic_sam, level=[3]) # [3] for instance level.
+mask_generator = SemanticSamAutomaticMaskGenerator(semantic_sam, level=[6]) # [4], [5], [6] for different part level.
+```
 ### :mosque: Data preparation
 Please refer to [prepare SA-1B data](DATASET.md). Let us know if you need more instructions about it.
 
@@ -97,11 +115,11 @@ The currently released checkpoints are only trained with SA-1B data.
 ### :arrow_forward: Demo
 For interactive segmentation.
 ```shell
-python demo.py
+python demo.py --ckpt /your/ckpt/path
 ```
 For mask auto-generation.
 ```shell
-python demo_auto_generation.py
+python demo_auto_generation.py --ckpt /your/ckpt/path
 ```
 
 ### :sunflower: Evaluation

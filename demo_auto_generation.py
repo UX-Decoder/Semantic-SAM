@@ -17,10 +17,10 @@ from utils.dist import init_distributed_mode
 from utils.arguments import load_opt_from_config_file
 from utils.constants import COCO_PANOPTIC_CLASSES
 
-from tasks import interactive_infer_image_idino_m2m_auto
+from tasks import interactive_infer_image_idino_m2m_auto, prompt_switch
 
 def parse_option():
-    parser = argparse.ArgumentParser('SEEM Demo', add_help=False)
+    parser = argparse.ArgumentParser('SemanticSAM Demo', add_help=False)
     parser.add_argument('--conf_files', default="configs/semantic_sam_only_sa-1b_swinL.yaml", metavar="FILE", help='path to config file', )
     parser.add_argument('--ckpt', default="", metavar="FILE", help='path to ckpt', )
     args = parser.parse_args()
@@ -45,28 +45,12 @@ ckpt=None
 cfgs={'T':"configs/semantic_sam_only_sa-1b_swinT.yaml",
       'L':"configs/semantic_sam_only_sa-1b_swinL.yaml"}
 
-# audio = whisper.load_model("base")
 sam_cfg=cfgs['L']
 opt = load_opt_from_config_file(sam_cfg)
 model_sam = BaseModel(opt, build_model(opt)).from_pretrained(args.ckpt).eval().cuda()
-# model_sam = BaseModel(opt, build_model(opt)).eval().cuda()
 
 @torch.no_grad()
 def inference(image,level=[0],*args, **kwargs):
-    def prompt_switch(p):
-        p=int(p)
-        if p==1:
-            return 3
-        if p==2:
-            return 2
-        if p==3:
-            return 0
-        if p==4:
-            return 4
-        if p==5:
-            return 1
-        if p==6:
-            return 5
     if level == 'All Prompt':
         level = [0, 1, 2, 3, 4, 5]
     else:
