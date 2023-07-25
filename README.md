@@ -67,22 +67,17 @@ First download a checkpoint from [model zoo](https://github.com/UX-Decoder/Seman
 * For interactive multi-granularity segmentation
 ```python
 from semantic_sam import prepare_image, plot_multi_results, build_semantic_sam, SemanticSAMPredictor
-semantic_sam=build_semantic_sam(model_type='<model_type>', ckpt='</your/ckpt/path>')  # model_type: 'L' / 'T', depends on your checkpint
 original_image, input_image = prepare_image(image_pth='examples/dog.jpg')  # change the image path to your image
-mask_generator = SemanticSAMPredictor(semantic_sam) 
-masks, ious = mask_generator.predict(original_image, input_image, point=[[0.5, 0.5]]) # input point [w, h] relative location
-iou_sort_masks, area_sort_masks = mask_generator.process_multi_mask(masks, ious, original_image) 
-
+mask_generator = SemanticSAMPredictor(build_semantic_sam(model_type='<model_type>', ckpt='</your/ckpt/path>')) # model_type: 'L' / 'T', depends on your checkpint
+iou_sort_masks, area_sort_masks = mask_generator.predict_masks(original_image, input_image, point='<your prompts>') # input point [[w, h]] relative location, i.e, [[0.5, 0.5]] is the center of the image
 plot_multi_results(iou_sort_masks, area_sort_masks, original_image, save_path='../vis/')  # results and original images will be saved at save_path
 ```
 * For mask auto generation
 ```python
 from semantic_sam import prepare_image, plot_results, build_semantic_sam, SemanticSamAutomaticMaskGenerator
-semantic_sam=build_semantic_sam(model_type='<model_type>', ckpt='</your/ckpt/path>')  # model_type: 'L' / 'T', depends on your checkpint
-mask_generator = SemanticSamAutomaticMaskGenerator(semantic_sam) 
 original_image, input_image = prepare_image(image_pth='examples/dog.jpg')  # change the image path to your image
+mask_generator = SemanticSamAutomaticMaskGenerator(build_semantic_sam(model_type='<model_type>', ckpt='</your/ckpt/path>')) # model_type: 'L' / 'T', depends on your checkpint
 masks = mask_generator.generate(input_image)
-
 plot_results(masks, original_image, save_path='../vis/')  # results and original images will be saved at save_path
 ```
 **Advanced usage:**

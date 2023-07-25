@@ -107,6 +107,10 @@ class SemanticSAMPredictor:
 
         return reses, [reses[i] for i in ids]
 
+    def predict_masks(self, image_ori, image, point=None):
+        masks, ious = self.predict(image_ori, image, point)
+        return self.process_multi_mask(masks, ious, image_ori)
+
     @staticmethod
     def remove_small_regions(
             mask: np.ndarray, area_thresh: float, mode: str
