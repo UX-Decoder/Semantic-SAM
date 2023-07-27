@@ -27,8 +27,8 @@ class SemanticSAMPredictor:
         """
         produce up to 6 prediction results for each click
         """
-        width = image_ori.shape[0]
-        height = image_ori.shape[1]
+        width = image_ori.shape[1]
+        height = image_ori.shape[0]
 
         data = {"image": image, "height": height, "width": width}
         # import ipdb; ipdb.set_trace()
