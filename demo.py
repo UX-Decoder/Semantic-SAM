@@ -20,7 +20,7 @@ from utils.constants import COCO_PANOPTIC_CLASSES
 from tasks import interactive_infer_image_idino_m2m
 
 def parse_option():
-    parser = argparse.ArgumentParser('SEEM Demo', add_help=False)
+    parser = argparse.ArgumentParser('SemanticSAM Demo', add_help=False)
     parser.add_argument('--conf_files', default="configs/semantic_sam_only_sa-1b_swinL.yaml", metavar="FILE", help='path to config file', )
     parser.add_argument('--ckpt', default="", metavar="FILE", help='path to ckpt', )
     args = parser.parse_args()
