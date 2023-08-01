@@ -147,9 +147,9 @@ We currently release the code of training on SA-1B only. Complete training with 
 `$n` is the number of gpus you use
 before running the training code, you need to specify your training data of SA-1B.
 ```shell
-export SAM_DATASET=/pth/to/dataset
-export SAM_DATASET_START=$start
-export SAM_DATASET_END=$end
+export SAM_DATASETS=/pth/to/dataset
+export SAM_SUBSET_START=$start
+export SAM_SUBSET_END=$end
 ```
 We convert SA-1B data into 100 tsv files. `start`(int, 0-99) is the start of your SA-1B data index and `end`(int, 0-99) is the end of your data index.
 If you are not using the tsv data formats, you can refer to this [json registration for SAM](datasets/registration/register_sam_json.py) for a reference. 
