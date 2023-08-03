@@ -156,15 +156,14 @@ If you are not using the tsv data formats, you can refer to this [json registrat
 
 For SwinL backbone
 ```shell
-python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_only_sa-1b_swinL.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n MODEL.WEIGHTS=/path/to/weights
+python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_only_sa-1b_swinL.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n
 ```
 For SwinT backbone
 ```shell
-python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_only_sa-1b_swinT.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n MODEL.WEIGHTS=/path/to/weights
-```
+python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_only_sa-1b_swinT.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n
 **We also support training to reproduce SAM**
 ```shell
-python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_reproduce_sam_swinL.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n MODEL.WEIGHTS=/path/to/weights
+python train_net.py --resume --num-gpus $n  --config-file configs/semantic_sam_reproduce_sam_swinL.yaml COCO.TEST.BATCH_SIZE_TOTAL=$n  SAM.TEST.BATCH_SIZE_TOTAL=$n  SAM.TRAIN.BATCH_SIZE_TOTAL=$n
 ```
 This is a swinL backbone. The only difference of this script is to use many-to-one matching and 3 prompts as in SAM.
 
