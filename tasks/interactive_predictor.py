@@ -85,7 +85,7 @@ class SemanticSAMPredictor:
             areas.append(area)
             mask, _ = self.remove_small_regions(mask, int(self.hole_scale), mode="holes")
             mask, _ = self.remove_small_regions(mask, int(self.island_scale), mode="islands")
-            mask = (mask).astype(np.float)
+            mask = (mask).astype(float)
             out_txt = texts
             visual = Visualizer(image_ori, metadata=metadata)
             color = [0., 0., 1.0]
