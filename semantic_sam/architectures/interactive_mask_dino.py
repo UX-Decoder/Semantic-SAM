@@ -456,7 +456,7 @@ class GeneralizedMaskDINO(nn.Module):
                     'boxes': torch.ones(self.max_num_instance, 4).to(gt_masks).float(),
                     'points': torch.ones(self.max_num_instance, 4).to(gt_masks).float(),
                     'boxes_dn': torch.ones(self.max_num_instance, 4).to(gt_masks).float(),
-                    "pb": torch.cat([torch.zeros(self.max_num_instance - box_start), torch.ones(box_start)], 0),
+                    "pb": torch.cat([torch.ones(box_start), torch.zeros(self.max_num_instance - box_start)], 0),
                     'box_start': box_start
                 })
                 if not self.training:
@@ -529,7 +529,7 @@ class GeneralizedMaskDINO(nn.Module):
                     "boxes":box_ops.box_xyxy_to_cxcywh(gt_boxes[index])/image_size_xyxy,
                     "ori_boxes":box_ops.box_xyxy_to_cxcywh(gt_boxes)/image_size_xyxy,
                     "points":box_ops.box_xyxy_to_cxcywh(point_coords)/image_size_xyxy,
-                    "pb": torch.cat([torch.zeros(self.max_num_instance - box_start), torch.ones(box_start)], 0),
+                    "pb": torch.cat([torch.ones(box_start), torch.zeros(self.max_num_instance - box_start)], 0),
                     "gt_whole_classes": targets_per_image.gt_whole_classes[index] if targets_per_image.has('gt_whole_classes') and prediction_switch['whole'] else None,
                     "gt_part_classes": targets_per_image.gt_part_classes[index] if targets_per_image.has('gt_part_classes') and prediction_switch['part'] else None,
                 }
