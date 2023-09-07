@@ -54,7 +54,7 @@ def inference(image,level=[0],*args, **kwargs):
     if level == 'All Prompt':
         level = [1, 2, 3, 4, 5, 6]
     else:
-        le = [level.split(' ')[-1]]
+        level = [level.split(' ')[-1]]
     print(level)
     text_size, hole_scale, island_scale=640,100,100
     text, text_part, text_thresh='','','0.0'
