@@ -52,10 +52,9 @@ model_sam = BaseModel(opt, build_model(opt)).from_pretrained(args.ckpt).eval().c
 @torch.no_grad()
 def inference(image,level=[0],*args, **kwargs):
     if level == 'All Prompt':
-        level = [0, 1, 2, 3, 4, 5]
+        level = [1, 2, 3, 4, 5, 6]
     else:
         le = [level.split(' ')[-1]]
-        level = [prompt_switch(l) for l in le]
     print(level)
     text_size, hole_scale, island_scale=640,100,100
     text, text_part, text_thresh='','','0.0'
