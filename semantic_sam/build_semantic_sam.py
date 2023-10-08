@@ -53,15 +53,23 @@ def plot_results(outputs, image_ori, save_path='../vis/'):
     """
     plot input image and its reuslts
     """
-    if not os.path.exists(save_path):
-        os.mkdir(save_path)
+    if os.path.isdir(save_path):
+        if not os.path.exists(save_path):
+            os.mkdir(save_path)
+        image_ori_name = 'input.png'
+        im_name = 'example.png'
+    else:
+        image_ori_name = os.path.basename(save_path).split('.')[0] + '_input.png'
+        im_name = os.path.basename(save_path).split('.')[0]+ '_example.png'
+        save_path = os.path.dirname(save_path)
+            
     fig = plt.figure()
     plt.imshow(image_ori)
-    plt.savefig('../vis/input.png')
+    plt.savefig(os.path.join(save_path, image_ori_name))
     show_anns(outputs)
     fig.canvas.draw()
     im = Image.frombytes('RGB', fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
-    plt.savefig('../vis/example.png')
+    plt.savefig(os.path.join(save_path, im_name))
     return im
 
 def plot_multi_results(iou_sort_masks, area_sort_masks, image_ori, save_path='../vis/'):
