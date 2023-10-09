@@ -54,15 +54,16 @@ def plot_results(outputs, image_ori, save_path='../vis/'):
     plot input image and its reuslts
     """
     if os.path.isdir(save_path):
-        if not os.path.exists(save_path):
-            os.mkdir(save_path)
         image_ori_name = 'input.png'
         im_name = 'example.png'
     else:
         image_ori_name = os.path.basename(save_path).split('.')[0] + '_input.png'
         im_name = os.path.basename(save_path).split('.')[0]+ '_example.png'
         save_path = os.path.dirname(save_path)
-            
+        
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)       
+        
     fig = plt.figure()
     plt.imshow(image_ori)
     plt.savefig(os.path.join(save_path, image_ori_name))
