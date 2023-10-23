@@ -19,7 +19,7 @@ class BaseModel(nn.Module):
         outputs = self.model(*inputs, **kwargs)
         return outputs
 
-    def save_pretrained(self, save_dir):
+    def save_pretrained(self, save_path):
         torch.save(self.model.state_dict(), save_path)
 
     def from_pretrained(self, load_dir):
