@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from torchvision import transforms
-from utils.visualizer import Visualizer
+from ..utils.visualizer import Visualizer
 from typing import Tuple
 from PIL import Image
 from detectron2.data import MetadataCatalog

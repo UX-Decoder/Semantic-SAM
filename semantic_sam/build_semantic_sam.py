@@ -12,12 +12,12 @@ from torchvision import transforms
 import torch
 import os
 
-from utils.arguments import load_opt_from_config_file
-from semantic_sam.BaseModel import BaseModel
-from semantic_sam import build_model
-from tasks.automatic_mask_generator import SemanticSamAutomaticMaskGenerator
-from tasks.interactive_idino_m2m_auto import show_anns
-from tasks.interactive_predictor import SemanticSAMPredictor
+from .utils.arguments import load_opt_from_config_file
+from .BaseModel import BaseModel
+from . import build_model
+from .tasks.automatic_mask_generator import SemanticSamAutomaticMaskGenerator
+from .tasks.interactive_idino_m2m_auto import show_anns
+from .tasks.interactive_predictor import SemanticSAMPredictor
 
 
 def prepare_image(image_pth):
