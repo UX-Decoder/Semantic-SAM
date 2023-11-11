@@ -7,7 +7,7 @@ from timm.models.layers import trunc_normal_
 from .registry import register_model
 from ..utils import configurable
 from .LangEncoder import build_tokenizer, build_lang_encoder
-from utils.prompt_engineering import prompt_engineering, get_prompt_templates
+from ..utils.prompt_engineering import prompt_engineering, get_prompt_templates
 
 
 class LanguageEncoder(nn.Module):

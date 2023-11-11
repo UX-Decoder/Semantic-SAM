@@ -20,7 +20,7 @@ import torch.distributed as dist
 import torchvision
 from torch import Tensor
 
-from utils.constants import *
+from .constants import *
 
 def get_iou(gt_masks, pred_masks, ignore_label=-1):
     rev_ignore_mask = ~(gt_masks == ignore_label)
