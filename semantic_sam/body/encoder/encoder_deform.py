@@ -22,7 +22,7 @@ from .registry import register_encoder
 from ...utils import configurable
 from ...modules import PositionEmbeddingSine
 from ..transformer_blocks import _get_clones, _get_activation_fn
-from .ops.modules import MSDeformAttn
+from ops.modules import MSDeformAttn
 from torch.utils import checkpoint
 
 # MSDeformAttn Transformer encoder in deformable detr
