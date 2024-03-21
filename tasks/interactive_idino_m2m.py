@@ -83,7 +83,7 @@ def interactive_infer_image(model, image,all_classes,all_parts, thresh,text_size
         areas.append(area)
         mask,_=remove_small_regions(mask,int(hole_scale),mode="holes")
         mask,_=remove_small_regions(mask,int(island_scale),mode="islands")
-        mask=(mask).astype(np.float)
+        mask=(mask).astype(float)
         out_txt = texts
         visual = Visualizer(image_ori, metadata=metadata)
         color=[0.,0.,1.0]
