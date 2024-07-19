@@ -41,6 +41,11 @@ def interactive_infer_image(model, image,level,all_classes,all_parts, thresh,tex
     show_anns(outputs)
     fig.canvas.draw()
     im=Image.frombytes('RGB', fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
+
+    plt.colse('all')
+    del fig
+    import gc
+    gc.collect()
     return im
 
 
